@@ -4,15 +4,37 @@ function DataRetrieval() {
     const [naturalLanguageInput, setNaturalLanguageInput] = useState('');
     const [selectedDataRange, setSelectedDataRange] = useState('Option1');  // default selection
 
-    const handleNaturalLanguageSubmit = () => {
-        // Here, send the naturalLanguageInput to the backend to process and fetch data
-        console.log('Fetching data for:', naturalLanguageInput);
+    const handleNaturalLanguageSubmit = async () => {
+        try {
+            const response = await fetch('/api/data-retrieval/natural-language', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    query: naturalLanguageInput
+                })
+            });
+            const data = await response.json();
+            // Handle the data received from the backend
+        } catch (error) {
+            console.error('Error fetching data using natural language:', error);
+        }
     };
+    
 
-    const handleDropdownSelection = () => {
-        // Here, fetch data based on the selectedDataRange from the dropdown
-        console.log('Fetching data for:', selectedDataRange);
+    const handleDropdownSelection = async () => {
+        try {
+            const response = await fetch(`/api/data-retrieval/selected-range?range=${selectedDataRange}`, {
+                method: 'GET'
+            });
+            const data = await response.json();
+            // Handle the data received from the backend
+        } catch (error) {
+            console.error('Error fetching data using dropdown selection:', error);
+        }
     };
+    
 
     return (
         <div>

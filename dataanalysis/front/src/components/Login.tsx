@@ -6,14 +6,28 @@ function Register() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [userType, setUserType] = useState('Customer');  // default user type
 
-    const handleSubmit = (e:React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (password !== confirmPassword) {
-            console.log('Passwords do not match!');
-            return;
+        try {
+            const response = await fetch('/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username,
+                    password
+                })
+            });
+            const data = await response.json();
+            if (data.success) {
+                // Handle successful login, e.g. redirect to dashboard or set user session
+            } else {
+                // Handle login error, e.g. show error message to user
+            }
+        } catch (error) {
+            console.error('Error during login:', error);
         }
-        // Here, you'd send the user data to your backend to register
-        console.log('Registering as', username, userType);
     };
 
     return (
