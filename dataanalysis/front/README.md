@@ -44,3 +44,101 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+
+
+# API文档
+
+## 1. 登录
+
+- **Endpoint**: `/api/login`
+- **Method**: `POST`
+
+### Request Body:
+\```json
+{
+    "username": "string",
+    "password": "string"
+}
+\```
+
+### Responses:
+
+- **200 OK**:
+  \```json
+  {
+      "success": true,
+      "token": "user_token_string"
+  }
+  \```
+
+- **400 Bad Request**:
+  \```json
+  {
+      "success": false,
+      "message": "Error message explaining the reason"
+  }
+  \```
+
+## 2. 注册
+
+- **Endpoint**: `/api/register`
+- **Method**: `POST`
+
+### Request Body:
+\```json
+{
+    "username": "string",
+    "password": "string",
+    "userType": "Customer | Merchants | Data Analysts"
+}
+\```
+
+### Responses:
+
+- **201 Created**:
+  \```json
+  {
+      "success": true,
+      "message": "User registered successfully"
+  }
+  \```
+
+- **400 Bad Request**:
+  \```json
+  {
+      "success": false,
+      "message": "Error message explaining the reason"
+  }
+  \```
+
+## 3. 数据检索 (Data Retrieval)
+
+测试，不是最终版本
+
+- **Endpoint**: `/api/data`
+- **Method**: `GET`
+
+### Query Parameters:
+
+- `type`: The type of data to retrieve, e.g., "sales", "users", etc.
+- `dateFrom`: Optional start date for data retrieval.
+- `dateTo`: Optional end date for data retrieval.
+
+### Responses:
+
+- **200 OK**:
+  \```json
+  {
+      "success": true,
+      "data": "Array or object of data"
+  }
+  \```
+
+- **400 Bad Request**:
+  \```json
+  {
+      "success": false,
+      "message": "Error message explaining the reason"
+  }
+  \```
