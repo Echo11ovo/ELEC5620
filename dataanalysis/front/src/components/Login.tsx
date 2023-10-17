@@ -1,24 +1,27 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form, Input, Button, Checkbox, Row, Col } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
 function Login() {
     const navigate = useNavigate();
-    const [rememberMe, setRememberMe] = useState(false);
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            navigate('/retrieval');  // Redirect to dataRetrieval if already logged in
+        }
+    }, [navigate]);
+
+    const handleSubmit = async (values: { username: string, password: string, remember: boolean }) => {
         try {
             const response = await fetch('/api/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, password })
+                body: JSON.stringify(values)
             });
             const data = await response.json();
-            if (data.success && rememberMe) {
+            if (data.success && values.remember) {
                 localStorage.setItem('token', data.token);  // Save token to localStorage
             }
             navigate('/retrieval');  // Navigate to dataRetrieval page after successful login
@@ -44,7 +47,7 @@ function Login() {
                     <Input prefix={<LockOutlined />} type="password" placeholder="Password" />
                 </Form.Item>
                 <Form.Item name="remember" valuePropName="checked">
-                    <Checkbox checked={rememberMe} onChange={() => setRememberMe(!rememberMe)}>Remember me</Checkbox>
+                    <Checkbox>Remember me</Checkbox>
                 </Form.Item>
                 <Form.Item>
                     <Button type="primary" htmlType="submit" style={{ width: '100%' }}>
