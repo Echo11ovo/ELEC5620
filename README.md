@@ -1,2 +1,3 @@
 # ELEC5620
-ELEC5620 Course assessment
+ELEC5620 Course assignment
+
