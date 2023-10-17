@@ -1,68 +1,61 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Form, Input, Button, Checkbox, Row, Col } from 'antd';
+import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
-function Register() {
+function Login() {
+    const navigate = useNavigate();
+    const [rememberMe, setRememberMe] = useState(false);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [userType, setUserType] = useState('Customer');  // default user type
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
             const response = await fetch('/api/login', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    username,
-                    password
-                })
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
             });
             const data = await response.json();
-            if (data.success) {
-                // Handle successful login, e.g. redirect to dashboard or set user session
-            } else {
-                // Handle login error, e.g. show error message to user
+            if (data.success && rememberMe) {
+                localStorage.setItem('token', data.token);  // Save token to localStorage
             }
+            navigate('/retrieval');  // Navigate to dataRetrieval page after successful login
         } catch (error) {
             console.error('Error during login:', error);
         }
     };
 
     return (
-        <div>
-            <h2>Register</h2>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Username:</label>
-                    <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
-                </div>
-                <div>
-                    <label>Password:</label>
-                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                </div>
-                <div>
-                    <label>Confirm Password:</label>
-                    <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
-                </div>
-                <div>
-                    <label>User Type:</label>
-                    <select value={userType} onChange={(e) => setUserType(e.target.value)}>
-                        <option value="Customer">Customer</option>
-                        <option value="Merchant">Merchant</option>
-                        <option value="Data Analyst">Data Analyst</option>
-                    </select>
-                </div>
-                <div>
-                    <button type="submit">Register</button>
-                </div>
-            </form>
-            <div>
-                Already have an account? <a href="/login">Login</a>
-            </div>
-        </div>
-    );
+        <Row justify="center" align="middle" style={{ height: '100vh' }}>
+        <Col span={8}>
+            <Form onFinish={handleSubmit} initialValues={{ remember: true }}>
+                <Form.Item
+                    name="username"
+                    rules={[{ required: true, message: 'Please input your Username!' }]}
+                >
+                    <Input prefix={<UserOutlined />} placeholder="Username" />
+                </Form.Item>
+                <Form.Item
+                    name="password"
+                    rules={[{ required: true, message: 'Please input your Password!' }]}
+                >
+                    <Input prefix={<LockOutlined />} type="password" placeholder="Password" />
+                </Form.Item>
+                <Form.Item name="remember" valuePropName="checked">
+                    <Checkbox checked={rememberMe} onChange={() => setRememberMe(!rememberMe)}>Remember me</Checkbox>
+                </Form.Item>
+                <Form.Item>
+                    <Button type="primary" htmlType="submit" style={{ width: '100%' }}>
+                        Log in
+                    </Button>
+                    Or <a onClick={() => navigate('/register')}>register now!</a>
+                </Form.Item>
+            </Form>
+        </Col>
+    </Row>
+);
 }
 
-export default Register;
+export default Login;
