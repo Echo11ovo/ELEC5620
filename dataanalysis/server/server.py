@@ -1,4 +1,4 @@
-# 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
+
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
@@ -14,7 +14,7 @@ ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # Initialize the OpenAI API with your API key
-openai.api_key = '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'
+openai.api_key = 'test'
 
 # Ensure the upload folder exists
 if not os.path.exists(UPLOAD_FOLDER):
