@@ -6,7 +6,7 @@ type Message = {
     type: 'file-response' | 'chat-response';
     content: string;
 };
-const BACKEND_URL = 'http://localhost:5000';
+const BACKEND_URL = 'http://localhost:3000';
 
 function Chat() {
     const [messages, setMessages] = useState<Message[]>([]);
@@ -31,6 +31,7 @@ function Chat() {
             const data = await response.json();
             setMessages(prevMessages => [...prevMessages, { type: 'chat-response', content: data.message }]);
             setUserInput('');
+            console.log(data.message)
         } catch (error) {
             message.error('Error sending message: ' + (error as Error).message);
         }

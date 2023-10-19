@@ -1,12 +1,11 @@
-
 from flask import Flask, request, jsonify
-from flask_cors import CORS
+# import flask_cors
 from werkzeug.utils import secure_filename
 import os
 import openai
 
 app = Flask(__name__)
-CORS(app, origins=["http://localhost:3000"])  # Allow cross-origin requests from localhost:3000
+# flask_cors.CORS(app, origins=["http://localhost:3000"])  # Allow cross-origin requests from localhost:3000
 
 UPLOAD_FOLDER = './uploads'
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
@@ -14,7 +13,7 @@ ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # Initialize the OpenAI API with your API key
-openai.api_key = 'test'
+openai.api_key = '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'
 
 # Ensure the upload folder exists
 if not os.path.exists(UPLOAD_FOLDER):
@@ -27,15 +26,19 @@ def allowed_file(filename):
 def chat():
     data = request.get_json()
     user_message = data.get('message', '')
+    prompt_messages=[{'role':'system', 'content':"Answer the question"},
+                     {'role':'user', 'content': user_message}]
     
     # Interact with OpenAI API
     try:
-        response = openai.Completion.create(
-            engine="davinci",
-            prompt=user_message,
-            max_tokens=150
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=prompt_messages,
+            max_tokens=200,
+            temperature=0.9
         )
-        response_message = response.choices[0].text.strip()
+        response_message = response.choices[0].message['content'].strip()
+        # return response from the ChatGPT API
         return jsonify({"message": response_message})
     except Exception as e:
         return jsonify({"message": f"Error: {str(e)}"}), 500
@@ -56,4 +59,4 @@ def upload_file():
     return jsonify({"message": "Invalid file type"}), 400
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True,host='localhost', port=3000)
