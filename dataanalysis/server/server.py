@@ -13,7 +13,7 @@ ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # Initialize the OpenAI API with your API key
-openai.api_key = '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'
+# openai.api_key =
 
 # Ensure the upload folder exists
 if not os.path.exists(UPLOAD_FOLDER):
