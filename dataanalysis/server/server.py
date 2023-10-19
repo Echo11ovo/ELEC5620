@@ -1,4 +1,4 @@
-
+# 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
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
@@ -13,8 +13,8 @@ ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-# Initialize the OpenAI API with your API key
-openai.api_key = 'test'
+
+openai.api_key = 'tst'
 
 # Ensure the upload folder exists
 if not os.path.exists(UPLOAD_FOLDER):
@@ -30,12 +30,14 @@ def chat():
     
     # Interact with OpenAI API
     try:
-        response = openai.Completion.create(
-            engine="davinci",
-            prompt=user_message,
-            max_tokens=150
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[{"role": "system", "content": "You are an data analyst that analyze data and give insights based on question and provided data."},   
+                      {"role": "user", "content": user_message}],
+            max_tokens=150,
+            temperature=0.2
         )
-        response_message = response.choices[0].text.strip()
+        response_message = response.choices[0].message['content'].strip()
         return jsonify({"message": response_message})
     except Exception as e:
         return jsonify({"message": f"Error: {str(e)}"}), 500
