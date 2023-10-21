@@ -4,16 +4,20 @@ from werkzeug.utils import secure_filename
 import os
 import openai
 
+from apiConnection import apiCall
+import processPrompt
+import dbOperation
+
 app = Flask(__name__)
 # flask_cors.CORS(app, origins=["http://localhost:3000"])  # Allow cross-origin requests from localhost:3000
 
 UPLOAD_FOLDER = './uploads'
-ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
+ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'csv'}
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # Initialize the OpenAI API with your API key
-# openai.api_key =
+openai.api_key ='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'
 
 # Ensure the upload folder exists
 if not os.path.exists(UPLOAD_FOLDER):
@@ -22,26 +26,31 @@ if not os.path.exists(UPLOAD_FOLDER):
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+
 @app.route('/api/chat', methods=['POST'])
 def chat():
+    # get user_message from frontend
     data = request.get_json()
     user_message = data.get('message', '')
-    prompt_messages=[{'role':'system', 'content':"Answer the question"},
-                     {'role':'user', 'content': user_message}]
-    
-    # Interact with OpenAI API
-    try:
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=prompt_messages,
-            max_tokens=200,
-            temperature=0.9
-        )
-        response_message = response.choices[0].message['content'].strip()
-        # return response from the ChatGPT API
-        return jsonify({"message": response_message})
-    except Exception as e:
-        return jsonify({"message": f"Error: {str(e)}"}), 500
+    # get prompt_type from frontend
+    # prompt_type = data.get('prompt_type', '')
+
+    input_file = './uploads/output.csv'
+    # Data Analysis
+    # process message
+    prompt_type, user_message = processPrompt.dataAnalysis(user_message, input_file)
+
+    # Data Retrieval
+    # prompt_type, user_message = processPrompt.dataRetrieval(user_message)
+
+    # call api and get response_message
+    response_message = apiCall(prompt_type, user_message)
+
+    # Data Retrieval - query data from database
+    # dbOperation.queryData(response_message)
+
+    # return response_message to frontend
+    return jsonify({"message": response_message})
 
 @app.route('/api/upload', methods=['POST'])
 def upload_file():

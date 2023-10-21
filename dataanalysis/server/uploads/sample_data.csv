@@ -1,0 +1,21 @@
+orderid,customerid,customerName,merchantid,merchantName,productid,productName,ordertime,quantity,amount
+1,21,Mark Cooper,11,Electro Gallery,P30,Complete Weight Lifting Set,2023/3/9 11:36,2,88.64
+2,32,Rodney Karpinski,14,Game Warehouse,P7,Mountain Bike - 29-inch,2023/12/15 22:33,9,2500.2
+3,50,Karen Shoulders,14,Game Warehouse,P30,Complete Weight Lifting Set,2023/3/9 11:28,6,265.92
+4,37,Albert Burnside,44,Tech Hub,P4,Men's Slim Fit Dress Shirt,2023/1/10 03:27,3,213.87
+5,40,Kim Richard,26,Quick Store,P18,Graphic Novel Collection,2023/4/12 22:06,3,106.02
+6,16,Charles Lemay,24,Mega Shop,P18,Graphic Novel Collection,2023/7/26 22:44,10,353.4
+7,3,Michael Stoneback,28,Quick Market,P48,Fantasy Adventure Graphic Novel,2023/6/17 05:48,3,70.77
+8,28,Edward Oritz,41,Tech Store,P32,4K Ultra HD Smart LED TV,2023/5/12 22:17,8,4078.48
+9,10,Kim Smith,21,Awesome Store,P3,Sony Noise-Canceling Headphones,2023/3/5 20:11,5,4580.95
+10,63,Gay Ross,30,Electro Market,P9,Adjustable Dumbbell Set,2023/2/25 06:10,9,156.78
+11,22,Lucy Reagan,44,Tech Hub,P23,LG OLED 4K Smart TV,2023/1/6 23:28,9,11074.14
+12,78,Ronald Hooper,36,Awesome Emporium,P22,Apple MacBook Pro 16-inch,2023/1/2 12:54,2,2041.34
+13,99,Charles Haig,26,Quick Store,P49,Artisanal Gourmet Chocolates,2023/11/12 23:38,8,1151.36
+14,83,Renee Girard,10,Game Outlet,P7,Mountain Bike - 29-inch,2023/12/6 17:40,10,2778
+15,51,Ian Barlow,23,Game Market,P18,Graphic Novel Collection,2023/10/9 10:00,2,70.68
+16,13,Jessie Fletcher,46,Tech Emporium,P4,Men's Slim Fit Dress Shirt,2023/11/4 23:22,8,570.32
+17,96,David Obrien,16,Awesome Market,P47,Bestselling Mystery Novel,2023/8/10 04:09,8,396.08
+18,98,Vera Gant,35,Awesome Boutique,P25,Women's Classic Leather Jacket,2023/3/30 08:09,3,93.27
+19,74,James Matten,44,Tech Hub,P47,Bestselling Mystery Novel,2023/4/25 23:36,7,346.57
+20,84,Patricia Jean,19,Tech Market,P49,Artisanal Gourmet Chocolates,2023/8/20 16:16,2,287.84

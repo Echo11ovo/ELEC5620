@@ -68,7 +68,7 @@ function Chat() {
 
             <Upload 
                 name="file" 
-                action="/api/upload" 
+                action="/api/upload"
                 showUploadList={false} 
                 onChange={handleFileUpload}>
                 <Button icon={<UploadOutlined />}>Upload a file for analysis</Button>
