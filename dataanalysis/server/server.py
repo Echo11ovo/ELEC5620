@@ -40,14 +40,17 @@ def chat():
     # process message
     prompt_type, user_message = processPrompt.dataAnalysis(user_message, input_file)
 
-    # Data Retrieval
-    # prompt_type, user_message = processPrompt.dataRetrieval(user_message)
-
     # call api and get response_message
     response_message = apiCall(prompt_type, user_message)
 
-    # Data Retrieval - query data from database
+    # # Data Retrieval
+    # prompt_type, user_message = processPrompt.dataRetrieval(user_message)
+    # # Data Retrieval - query data from database
     # dbOperation.queryData(response_message)
+    # # Data Retrieval - return dict data format to frontend
+    # dataform = dbOperation.displayData(headers, dataRequired)
+    # return json format data to frontend
+
 
     # return response_message to frontend
     return jsonify({"message": response_message})
