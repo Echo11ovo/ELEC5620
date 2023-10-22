@@ -14,7 +14,7 @@ ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
-openai.api_key = 'tst'
+openai.api_key = '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'
 
 # Ensure the upload folder exists
 if not os.path.exists(UPLOAD_FOLDER):
@@ -34,7 +34,6 @@ def chat():
             model="gpt-3.5-turbo",
             messages=[{"role": "system", "content": "You are an data analyst that analyze data and give insights based on question and provided data."},   
                       {"role": "user", "content": user_message}],
-            max_tokens=150,
             temperature=0.2
         )
         response_message = response.choices[0].message['content'].strip()
