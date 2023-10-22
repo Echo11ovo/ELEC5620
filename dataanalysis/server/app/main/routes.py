@@ -30,10 +30,15 @@ def register():
     # Create new user
     new_user = User(username=username, user_type=user_type)
     new_user.set_password(password)
-    db.session.add(new_user)
-    db.session.commit()
 
-    return jsonify({"success": True, "message": "Registered successfully!"})
+    try:
+        db.session.add(new_user)
+        db.session.commit()
+        return jsonify({"success": True, "message": "Registered successfully!"})
+    except Exception as e:
+        db.session.rollback()  # Rollback the session in case of error
+        print("Error while registering:", str(e))  # Print the error
+        return jsonify({"success": False, "message": "Error during registration!"}), 500
 
 
 @main.route('/api/login', methods=['POST'])
@@ -43,12 +48,24 @@ def login():
     password = data.get('password')
 
     user = User.query.filter_by(username=username).first()
-    if not user or not user.check_password(password):
+
+    if not user:
+        return jsonify({"success": False, "message": "User not found!"}), 404
+
+    if not user.check_password(password):
         return jsonify({"success": False, "message": "Invalid username or password!"}), 401
 
-    # Here you can add JWT or session-based authentication for logged-in users.
-    return jsonify({"success": True, "message": "Logged in successfully!"})
-
+    try:
+        response = {
+            "success": True,
+            "message": "Logged in successfully!",
+            "userType": user.user_type  # Assuming user_type attribute exists in the User model
+        }
+        print(f"Sending response: {response}")
+        return jsonify(response)
+    except Exception as e:
+        print("Error during login:", str(e))
+        return jsonify({"success": False, "message": "Internal server error!"}), 500
 
 @main.route('/api/chat', methods=['POST'])
 def chat():

@@ -7,6 +7,9 @@ type Message = {
     type: 'file-response' | 'chat-response';
     content: string;
 };
+
+
+
 const BACKEND_URL = 'http://localhost:5000';
 
 const loadingIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -16,7 +19,9 @@ function Chat() {
     const [userInput, setUserInput] = useState<string>('');
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const { Option } = Select;
-
+    const [userType, setUserType] = useState<string | null>(localStorage.getItem('userType')); 
+    //test
+    console.log("User Type:", userType); 
     const handleFileUpload = async (info: any) => {
         if (info.file.status === 'done') {
             setMessages(prevMessages => [...prevMessages, { type: 'file-response', content: info.file.response.message }]);
@@ -24,6 +29,27 @@ function Chat() {
             message.error(`File upload failed: ${info.file.response.message}`);
         }
     };
+
+    const promptsForUser = {
+        'Customer': [
+            'Personalized Recommendations',
+            'Consumption Trend Analysis',
+            'Shopping Advice'
+        ],
+        'Merchants': [
+            'Inventory Strategies',
+            'Sales Trend Analysis',
+            'Product Popularity Analysis'
+        ],
+        'Data Analyst': [
+            'Customer Group Analysis',
+            'Market Trend Forecasting',
+            'Store Rank Analysis',
+            'Sales Suggestions'
+        ]
+    };
+    const availablePrompts = promptsForUser[userType as keyof typeof promptsForUser] || [];
+    console.log("Available Prompts:", availablePrompts);
 
     const handleSendMessage = async () => {
         setIsLoading(true);
@@ -49,9 +75,12 @@ function Chat() {
                 <div className="header">
                     <h2>intelligent data analysis</h2>
                     <Select placeholder="Select a prompt" className="select">
-                        <Option value="market-trend-forecast">Market Trend Forecast</Option>
-                        <Option value="product-popularity-analysis">Analyze the Product Popularity</Option>
-                    </Select>
+                    {availablePrompts.map(prompt => (
+                        <Option value={prompt.replace(/\s+/g, '-').toLowerCase()} key={prompt}>
+                            {prompt}
+                        </Option>
+                    ))}
+                </Select>
                 </div>
                 
                 <div className="chatBox" role="log" aria-live="polite">
@@ -77,7 +106,7 @@ function Chat() {
                 <div className="uploadBox">
                     <Upload 
                         name="file" 
-                        action="/api/upload" 
+                        action={`${BACKEND_URL}/api/upload`}  
                         showUploadList={false} 
                         onChange={handleFileUpload}
                         aria-label="Upload a file for analysis">

@@ -54,8 +54,13 @@ function Login() {
                 throw new Error(data.message || 'Login failed');
             }
 
-            if (data.success && values.remember) {
-                localStorage.setItem('token', data.token);
+            if (data.success) {
+                if (values.remember) {
+                    localStorage.setItem('token', data.token);
+                }
+                console.log("Server response:", data);
+
+                localStorage.setItem('userType', data.userType); // 保存用户类型到localStorage中
             }
             navigate('/retrieval');
         } catch (error: unknown) {
@@ -66,7 +71,7 @@ function Login() {
                 message.error('An unexpected error occurred.');
             }
         } finally {
-            setIsLoading(false); // 
+            setIsLoading(false);
         }
     };
 
