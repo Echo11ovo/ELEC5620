@@ -9,6 +9,7 @@ interface LoginFormValues {
     password: string;
     remember: boolean;
 }
+const BACKEND_URL = 'http://localhost:5000';
 
 function Login() {
     const [isLoading, setIsLoading] = useState(false); 
@@ -23,7 +24,7 @@ function Login() {
         if (!token) return;
 
         try {
-            const response = await fetch('/api/verify-token', {
+            const response = await fetch(`${BACKEND_URL}/api/verify-token`, {
                 method: 'POST',
                 headers: { 'Authorization': `Bearer ${token}` },
             });
@@ -41,7 +42,7 @@ function Login() {
     const handleSubmit = async (values: LoginFormValues) => {
         setIsLoading(true); 
         try {
-            const response = await fetch('/api/login', {
+            const response = await fetch(`${BACKEND_URL}/api/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(values)

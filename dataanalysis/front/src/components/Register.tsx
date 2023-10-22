@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Form, Input, Button, Row, Col, message } from 'antd';
+import { Form, Input, Button, Row, Col, message, Select } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import '../CSS/Register.css';
+
+const { Option } = Select;
+const BACKEND_URL = 'http://localhost:5000';
 
 function Register() {
     const navigate = useNavigate();
@@ -23,19 +26,18 @@ function Register() {
             message.error('Passwords do not match!');
             return;
         }
-        // Optionally: Check for password strength here
 
         try {
-            const response = await fetch('/api/register', {
+            const response = await fetch(`${BACKEND_URL}/api/register`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username, password, userType })
             });
             const data = await response.json();
             if (data.success) {
-                navigate('/login');  // Redirect to login page
+                navigate('/login');
             } else {
-                message.error('Registration failed. Please try again.');
+                message.error(data.message || 'Registration failed. Please try again.');
             }
         } catch (error) {
             console.error('Error during registration:', error);
@@ -59,16 +61,27 @@ function Register() {
                         <Input prefix={<UserOutlined />} placeholder="Username" />
                     </Form.Item>
                     <Form.Item
-                        name="email"
-                        rules={[{ required: true, message: 'Please input your Email!' }]}
-                    >
-                        <Input placeholder="Email" />
-                    </Form.Item>
-                    <Form.Item
                         name="password"
                         rules={[{ required: true, message: 'Please input your Password!' }]}
                     >
                         <Input prefix={<LockOutlined />} type="password" placeholder="Password" />
+                    </Form.Item>
+                    <Form.Item
+                        name="confirmPassword"
+                        rules={[{ required: true, message: 'Please confirm your Password!' }]}
+                    >
+                        <Input prefix={<LockOutlined />} type="password" placeholder="Confirm Password" />
+                    </Form.Item>
+                    <Form.Item
+                        name="userType"
+                        rules={[{ required: true, message: 'Please select your user type!' }]}
+                    >
+                        <Select placeholder="Select a user type">
+                            <Option value="Customer">Customer</Option>
+                            <Option value="Merchants">Merchants</Option>
+                            <Option value="Data Analysts">Data Analysts</Option>
+                            {/* Add other user types if needed */}
+                        </Select>
                     </Form.Item>
                     <Form.Item>
                         <Button type="primary" htmlType="submit" style={{ width: '100%' }}>
