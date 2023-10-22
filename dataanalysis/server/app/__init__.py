@@ -1,13 +1,13 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-
+from flask_cors import CORS
 # Initialize extensions
 db = SQLAlchemy()
 
 def create_app():
     # Create a Flask application instance
     app = Flask(__name__)
-
+    CORS(app)
     # Configure the application
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -19,5 +19,6 @@ def create_app():
     # Import and register blueprints
     from app.main import main as main_blueprint
     app.register_blueprint(main_blueprint)
-
+    with app.app_context():
+        db.create_all()
     return app

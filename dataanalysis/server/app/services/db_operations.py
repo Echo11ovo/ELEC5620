@@ -1,14 +1,8 @@
 import sqlite3
 import csv
-from app.models import db
+from app import db
 from werkzeug.security import generate_password_hash, check_password_hash
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 
-# Turn off modification tracking, which can consume memory. This is optional.
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-# Instantiate the SQLAlchemy object. This will be used for our database operations.
-db = SQLAlchemy(app)
 
 # Define the User model.
 # This represents the structure of our "users" table in the database.

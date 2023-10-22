@@ -8,6 +8,8 @@ from app.services.api_connection import apiCall
 from app.services.processPrompt import dataAnalysis, dataRetrieval
 from app.main.utils import allowed_file
 from app.main import main
+from flask import current_app as app
+
 from app.main.constants import ALLOWED_EXTENSIONS
 
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'csv'}
@@ -54,7 +56,7 @@ def chat():
     data = request.get_json()
     user_message = data.get('message', '')
 
-    input_file = './uploads/output.csv'
+    input_file = '.../uploads/output.csv'
     # Data Analysis
     # process message
     prompt_type, user_message = dataAnalysis(user_message, input_file)
