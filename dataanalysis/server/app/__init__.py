@@ -1,13 +1,24 @@
 from flask import Flask
-from flask_restful import Api
-
-from app.auth import Register, Login
+from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
+# Initialize extensions
+db = SQLAlchemy()
 
 def create_app():
+    # Create a Flask application instance
     app = Flask(__name__)
-    api = Api(app)
+    CORS(app)
+    # Configure the application
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config['UPLOAD_FOLDER'] = './uploads'
 
-    api.add_resource(Register, '/api/register')
-    api.add_resource(Login, '/api/login')
+    # Initialize extensions for this app
+    db.init_app(app)
 
+    # Import and register blueprints
+    from app.main import main as main_blueprint
+    app.register_blueprint(main_blueprint)
+    with app.app_context():
+        db.create_all()
     return app
