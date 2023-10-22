@@ -1,0 +1,37 @@
+.row-center {
+    height: 100vh;
+    background-color: #f5f5f5;
+    align-items: center;
+    justify-content: center;
+}
+
+.col-register {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* For larger screens, the register column can have a maximum width */
+@media (min-width: 768px) {
+    .col-register {
+        max-width: 450px;
+        margin: 0 auto;
+    }
+}
+
+.form-link {
+    text-align: center;
+}
+
+/* Add transitions for smoother experience */
+button, input {
+    transition: all 0.3s;
+}
+
+.form-link {
+    text-align: center;
+    margin-top: 15px;  
+}
+
+/* Other stylistic choices remain consistent with the login page for a uniform look and feel. */

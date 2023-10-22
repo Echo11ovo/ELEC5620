@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Form, Input, Button, Checkbox, Row, Col, message } from 'antd';
+import { Form, Input, Button, Row, Col, message, Spin } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import '../CSS/Login.css';
 
 interface LoginFormValues {
     username: string;
@@ -10,10 +11,10 @@ interface LoginFormValues {
 }
 
 function Login() {
+    const [isLoading, setIsLoading] = useState(false); 
     const navigate = useNavigate();
 
     useEffect(() => {
-        // It's better to verify the token with backend rather than just checking its existence
         checkTokenValidity();
     }, [navigate]);
 
@@ -21,7 +22,6 @@ function Login() {
         const token = localStorage.getItem('token');
         if (!token) return;
 
-        // Assuming you have an endpoint to verify token
         try {
             const response = await fetch('/api/verify-token', {
                 method: 'POST',
@@ -39,6 +39,7 @@ function Login() {
     };
 
     const handleSubmit = async (values: LoginFormValues) => {
+        setIsLoading(true); 
         try {
             const response = await fetch('/api/login', {
                 method: 'POST',
@@ -63,37 +64,41 @@ function Login() {
             } else {
                 message.error('An unexpected error occurred.');
             }
+        } finally {
+            setIsLoading(false); // 
         }
     };
 
     return (
-        <Row justify="center" align="middle" style={{ height: '100vh' }}>
-            <Col span={8}>
-                <Form onFinish={handleSubmit} initialValues={{ remember: true }}>
-                    <Form.Item
-                        name="username"
-                        rules={[{ required: true, message: 'Please input your Username!' }]}
-                    >
-                        <Input prefix={<UserOutlined />} placeholder="Username" />
-                    </Form.Item>
-                    <Form.Item
-                        name="password"
-                        rules={[{ required: true, message: 'Please input your Password!' }]}
-                    >
-                        <Input prefix={<LockOutlined />} type="password" placeholder="Password" />
-                    </Form.Item>
-                    <Form.Item name="remember" valuePropName="checked">
-                        <Checkbox>Remember me</Checkbox>
-                    </Form.Item>
-                    <Form.Item>
-                        <Button type="primary" htmlType="submit" style={{ width: '100%' }}>
-                            Log in
-                        </Button>
-                        Or <a onClick={() => navigate('/register')}>register now!</a>
-                    </Form.Item>
-                </Form>
-            </Col>
-        </Row>
+        <Spin spinning={isLoading}>  
+            <Row className="row-center" gutter={[0, { xs: 8, sm: 16, md: 24, lg: 32 }]}>
+                <Col className="col-login" xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 12 }} lg={{ span: 8 }} xl={{ span: 6 }}>
+                    <h2>Sign In</h2>
+                    <Form onFinish={handleSubmit} initialValues={{ remember: true }}>
+                        <Form.Item
+                            name="username"
+                            rules={[{ required: true, message: 'Please input your Username!' }]}
+                        >
+                            <Input prefix={<UserOutlined />} placeholder="Username" />
+                        </Form.Item>
+                        <Form.Item
+                            name="password"
+                            rules={[{ required: true, message: 'Please input your Password!' }]}
+                        >
+                            <Input prefix={<LockOutlined />} type="password" placeholder="Password" />
+                        </Form.Item>
+                        <Form.Item>
+                            <Button type="primary" htmlType="submit">
+                                Log in
+                            </Button>
+                        </Form.Item>
+                        <Form.Item className="form-link">
+                            Don't have an account? <a onClick={() => navigate('/register')}>Sign up now!</a>
+                        </Form.Item>
+                    </Form>
+                </Col>
+            </Row>
+        </Spin>
     );
 }
 

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Form, Input, Button, Select, Row, Col, message } from 'antd';
+import { Form, Input, Button, Row, Col, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import '../CSS/Register.css';
 
 function Register() {
     const navigate = useNavigate();
@@ -12,7 +13,7 @@ function Register() {
         userType: 'Customer'
     });
 
-    const handleFormChange = (changedValues:any, allValues:any) => {
+    const handleFormChange = (changedValues: any, allValues: any) => {
         setFormData(allValues);
     };
 
@@ -43,8 +44,9 @@ function Register() {
     };
 
     return (
-        <Row justify="center" align="middle" style={{ height: '100vh' }}>
-            <Col span={8}>
+        <Row className="row-center" gutter={[0, { xs: 8, sm: 16, md: 24, lg: 32 }]}>
+            <Col className="col-register" xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 12 }} lg={{ span: 8 }} xl={{ span: 6 }}>
+                <h2>Sign Up</h2>
                 <Form 
                     onFinish={handleSubmit} 
                     onValuesChange={handleFormChange}
@@ -57,36 +59,26 @@ function Register() {
                         <Input prefix={<UserOutlined />} placeholder="Username" />
                     </Form.Item>
                     <Form.Item
+                        name="email"
+                        rules={[{ required: true, message: 'Please input your Email!' }]}
+                    >
+                        <Input placeholder="Email" />
+                    </Form.Item>
+                    <Form.Item
                         name="password"
-                        rules={[
-                            { required: true, message: 'Please input your Password!' },
-                            // Optionally: Add more password strength rules here
-                        ]}
+                        rules={[{ required: true, message: 'Please input your Password!' }]}
                     >
                         <Input prefix={<LockOutlined />} type="password" placeholder="Password" />
                     </Form.Item>
-                    <Form.Item
-                        name="confirmPassword"
-                        rules={[{ required: true, message: 'Please confirm your Password!' }]}
-                    >
-                        <Input prefix={<LockOutlined />} type="password" placeholder="Confirm Password" />
-                    </Form.Item>
-                    <Form.Item
-                        name="userType"
-                        rules={[{ required: true, message: 'Please select a user type!' }]}
-                    >
-                        <Select placeholder="Select a user type">
-                            <Select.Option value="Customer">Customer</Select.Option>
-                            <Select.Option value="Merchants">Merchants</Select.Option>
-                            <Select.Option value="Data Analysts">Data Analysts</Select.Option>
-                        </Select>
-                    </Form.Item>
                     <Form.Item>
                         <Button type="primary" htmlType="submit" style={{ width: '100%' }}>
-                            Register
+                            Sign Up
                         </Button>
                     </Form.Item>
                 </Form>
+                <div className="form-link">
+                    Already have an account? <a onClick={() => navigate('/login')}>Log in here!</a>
+                </div>
             </Col>
         </Row>
     );
