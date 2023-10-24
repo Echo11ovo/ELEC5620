@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Input, Button, Select, Spin, Row, Col, message } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
-
+import { useNavigate } from 'react-router-dom';
 const { Option } = Select;
 const BACKEND_URL = 'http://localhost:5000';
 const loadingIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -11,7 +11,7 @@ function DataRetrieval() {
     const [selectedQuery, setSelectedQuery] = useState<string | undefined>();
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [dataFromBackend, setDataFromBackend] = useState<any>(null);
-
+    const navigate = useNavigate();
     const predefinedQueries = [
         "List all customers",
         "Show top selling products",
@@ -100,6 +100,9 @@ function DataRetrieval() {
                     </div>
                 )}
             </Col>
+            <div>
+                    <Button onClick={() => navigate('/chat')}>Let's git Analysis!</Button>
+                </div>
         </Row>
     );
 }
