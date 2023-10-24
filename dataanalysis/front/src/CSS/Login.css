@@ -36,6 +36,7 @@ h2 {
 .Login {
     background-color: #2F80ED; /* Adjust according to the blue in your image */
     border-color: #2F80ED;
+    color:#FFFFFF;
     width: 100%;
     height: 40px;
     border-radius: 5px;

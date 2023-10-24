@@ -74,8 +74,8 @@ function Chat() {
     return (
         <div className="chatPage">
             <Navbar /> 
+            <Button className="floatingButton" onClick={() => navigate('/retrieval')}>Come back to retrieval data</Button>
             <Row className="container" justify="center">
-
                 <Col xs={24} sm={22} md={18} lg={14} xl={12}>
                     <div className="header">
                         <h2>intelligent data analysis</h2>
@@ -90,9 +90,6 @@ function Chat() {
                                 </Option>
                             ))}
                         </Select>
-                    </div>
-                    <div>
-                        <Button onClick={() => navigate('/retrieval')}>Come back to retrieval data</Button>
                     </div>
                     <div className="chatBox" role="log" aria-live="polite">
                         {messages.map((message, index) => (
@@ -109,7 +106,7 @@ function Chat() {
                             onChange={(e) => setUserInput(e.target.value)}
                             placeholder="Type your message..."
                         />
-                        <Button type="primary" onClick={handleSendMessage} disabled={isLoading}>
+                        <Button type="primary" className="sendBtn" onClick={handleSendMessage} disabled={isLoading}>
                             {isLoading ? <Spin indicator={loadingIcon} /> : "Send"}
                         </Button>
                     </div>
