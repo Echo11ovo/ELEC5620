@@ -37,8 +37,9 @@ def register():
         return jsonify({"success": True, "message": "Registered successfully!"})
     except Exception as e:
         db.session.rollback()  # Rollback the session in case of error
-        print("Error while registering:", str(e))  # Print the error
+        print("Error while registering:", str(e))  # Print the error to logs
         return jsonify({"success": False, "message": "Error during registration!"}), 500
+
 
 
 @main.route('/api/login', methods=['POST'])

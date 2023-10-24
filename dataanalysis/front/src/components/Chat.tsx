@@ -39,7 +39,7 @@ function Chat() {
             'Sales Trend Analysis',
             'Product Popularity Analysis'
         ],
-        'Data Analyst': [
+        'Data Analysts': [
             'Customer Group Analysis',
             'Market Trend Forecasting',
             'Store Rank Analysis',

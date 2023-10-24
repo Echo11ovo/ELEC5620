@@ -7,7 +7,7 @@ db = SQLAlchemy()
 def create_app():
     # Create a Flask application instance
     app = Flask(__name__)
-    CORS(app)
+
     # Configure the application
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -21,4 +21,6 @@ def create_app():
     app.register_blueprint(main_blueprint)
     with app.app_context():
         db.create_all()
+
+    CORS(app)
     return app
