@@ -10,7 +10,7 @@ from app.main.utils import allowed_file
 from app.main import main
 from flask import current_app as app
 from app.services.query import queryData, displayData
-
+from flask_jwt_extended import create_access_token
 from app.main.constants import ALLOWED_EXTENSIONS
 
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'csv'}
@@ -56,11 +56,13 @@ def login():
     if not user.check_password(password):
         return jsonify({"success": False, "message": "Invalid username or password!"}), 401
 
+    access_token = create_access_token(identity=username)
     try:
         response = {
             "success": True,
             "message": "Logged in successfully!",
-            "userType": user.user_type  # Assuming user_type attribute exists in the User model
+            "token": access_token,
+            "userType": user.user_type
         }
         print(f"Sending response: {response}")
         return jsonify(response)

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Form, Input, Button, Row, Col, message, Spin } from 'antd';
+import { Form, Input, Button, Row, Col, message, Spin ,Checkbox} from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { useAuth } from '../AuthContext';
 
@@ -84,7 +84,7 @@ function Login() {
             <Row className="row-center" gutter={[0, { xs: 8, sm: 16, md: 24, lg: 32 }]}>
                 <Col className="col-login" xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 12 }} lg={{ span: 8 }} xl={{ span: 6 }}>
                     <h2>Sign In</h2>
-                    <Form onFinish={handleSubmit} initialValues={{ remember: true }}>
+                    <Form onFinish={handleSubmit} initialValues={{ remember: true }}>  {/* Set default value for remember */}
                         <Form.Item
                             name="username"
                             rules={[{ required: true, message: 'Please input your Username!' }]}
@@ -96,6 +96,9 @@ function Login() {
                             rules={[{ required: true, message: 'Please input your Password!' }]}
                         >
                             <Input prefix={<LockOutlined />} type="password" placeholder="Password" />
+                        </Form.Item>
+                        <Form.Item name="remember" valuePropName="checked" initialValue={true}>
+                            <Checkbox>Remember me</Checkbox>  {/* Add Remember me option */}
                         </Form.Item>
                         <Form.Item>
                             <Button type="primary" htmlType="submit">
