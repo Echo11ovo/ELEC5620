@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Input, Button, Upload, message, Select, Spin, Row, Col } from 'antd';
 import { UploadOutlined, LoadingOutlined } from '@ant-design/icons';
 import '../CSS/Chat.css';
@@ -13,6 +14,7 @@ const BACKEND_URL = 'http://localhost:5000';
 const loadingIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 function Chat() {
+    const navigate = useNavigate();
     const [messages, setMessages] = useState<Message[]>([]);
     const [userInput, setUserInput] = useState<string>('');
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -55,7 +57,7 @@ function Chat() {
             const response = await fetch(`${BACKEND_URL}/api/chat`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message: userInput , prompt: selectedPrompt })
+                body: JSON.stringify({ message: userInput, prompt: selectedPrompt })
             });
             const data = await response.json();
             setMessages(prevMessages => [...prevMessages, { type: 'chat-response', content: data.message }]);
@@ -84,7 +86,9 @@ function Chat() {
                         ))}
                     </Select>
                 </div>
-
+                <div>
+                    <Button onClick={() => navigate('/retrieval')}>Come back to retrieval data</Button>
+                </div>
                 <div className="chatBox" role="log" aria-live="polite">
                     {messages.map((message, index) => (
                         <div key={index} className={`message ${message.type}`}>

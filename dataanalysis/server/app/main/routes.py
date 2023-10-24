@@ -70,12 +70,12 @@ def login():
 
 @main.route('/api/chat', methods=['POST'])
 def chat():
-    # get user_message from frontend
     data = request.get_json()
     user_message = data.get('message', '')
     analysis_type = data.get('prompt','')
+    filename = data.get('filename', 'datafile.csv')  # get filename from frontend
+    input_file = os.path.join(app.config['UPLOAD_FOLDER'], filename)  # updated file path
     print(data)
-    input_file = './app/main\datafile.csv'
     # Data Analysis
     # process message
     prompt_type, user_message = dataAnalysis(user_message, analysis_type,input_file)
@@ -87,6 +87,7 @@ def chat():
     return jsonify({"message": response_message})
 
 
+
 @main.route('/api/upload', methods=['POST'])
 def upload_file():
     if 'file' not in request.files:
@@ -95,15 +96,15 @@ def upload_file():
     if file.filename == '':
         return jsonify({"message": "No selected file"}), 400
     if file and allowed_file(file.filename):
-        #filename = secure_filename(file.filename)
-        filename = 'datafile.csv'
+        filename = "datafile.csv"
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         file.save(file_path)
         print(file_path)
         print(filename)
         return jsonify({"message": "File successfully uploaded!"})
 
-    return jsonify({"message": "Invalid file type"}), 400 
+    return jsonify({"message": "Invalid file type"}), 400
+
 
 @main.route('/api/data-retrieval', methods=['POST'])
 def data_retrieval():

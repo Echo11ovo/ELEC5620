@@ -2,8 +2,10 @@ import openai
 from flask import Flask, request, jsonify
 
 
-openai.api_key=''
+openai.api_key = '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'
 # Interact with OpenAI API
+
+
 def apiCall(prompt_type, user_message):
     # prompt_type: analysis requirements/ data retrieval requirements
     # user_message: user input

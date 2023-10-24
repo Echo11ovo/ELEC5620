@@ -12,7 +12,7 @@ def create_app():
     # Configure the application
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    app.config['UPLOAD_FOLDER'] = './app/main'
+    app.config['UPLOAD_FOLDER'] = 'uploads/'
 
     # Initialize extensions for this app
     db.init_app(app)

@@ -1,6 +1,5 @@
 import sqlite3
 import csv
-from werkzeug.security import generate_password_hash, check_password_hash
 
 
 def queryData(query):
@@ -38,6 +37,8 @@ def displayData(headers, dataRequired):
         return data
 
 # Write data to .csv file
+
+
 def generateCSV(headers, dataRequired, output_file):
     # dataRequired: data returned from queryData()
     # write data to .csv file
