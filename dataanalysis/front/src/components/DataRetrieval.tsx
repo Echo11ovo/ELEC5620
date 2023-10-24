@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { Input, Button, Select, Spin, Row, Col, message } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
+import Navbar from './Logout';
+import '../CSS/Retrieval.css';
+
+
 const { Option } = Select;
 const BACKEND_URL = 'http://localhost:5000';
 const loadingIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -47,7 +51,9 @@ function DataRetrieval() {
     };
 
     return (
-        <Row justify="center">
+       <div className="retrievalPage">
+        <Navbar/>
+         <Row justify="center">
             <Col xs={24} sm={22} md={18} lg={14} xl={12}>
                 <h2>Data Retrieval</h2>
                 
@@ -104,6 +110,7 @@ function DataRetrieval() {
                     <Button onClick={() => navigate('/chat')}>Let's git Analysis!</Button>
                 </div>
         </Row>
+       </div>
     );
 }
 

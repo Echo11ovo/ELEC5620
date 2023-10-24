@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Input, Button, Upload, message, Select, Spin, Row, Col } from 'antd';
 import { UploadOutlined, LoadingOutlined } from '@ant-design/icons';
+import Navbar from './Logout';
+
 import '../CSS/Chat.css';
 
 type Message = {
@@ -70,57 +72,63 @@ function Chat() {
     };
 
     return (
-        <Row className="container" justify="center">
-            <Col xs={24} sm={22} md={18} lg={14} xl={12}>
-                <div className="header">
-                    <h2>intelligent data analysis</h2>
-                    <Select
-                        placeholder="Select a prompt"
-                        className="select"
-                        onChange={(value) => setSelectedPrompt(value as string)}
-                    >
-                        {availablePrompts.map(prompt => (
-                            <Option value={prompt.replace(/\s+/g, '-').toLowerCase()} key={prompt}>
-                                {prompt}
-                            </Option>
+        <div className="chatPage">
+            <Navbar /> 
+            <Row className="container" justify="center">
+
+                <Col xs={24} sm={22} md={18} lg={14} xl={12}>
+                    <div className="header">
+                        <h2>intelligent data analysis</h2>
+                        <Select
+                            placeholder="Select a prompt"
+                            className="select"
+                            onChange={(value) => setSelectedPrompt(value as string)}
+                        >
+                            {availablePrompts.map(prompt => (
+                                <Option value={prompt.replace(/\s+/g, '-').toLowerCase()} key={prompt}>
+                                    {prompt}
+                                </Option>
+                            ))}
+                        </Select>
+                    </div>
+                    <div>
+                        <Button onClick={() => navigate('/retrieval')}>Come back to retrieval data</Button>
+                    </div>
+                    <div className="chatBox" role="log" aria-live="polite">
+                        {messages.map((message, index) => (
+                            <div key={index} className={`message ${message.type}`}>
+                                <strong>{message.type === 'file-response' ? 'File Response:' : 'ChatGPT:'}</strong> {message.content}
+                            </div>
                         ))}
-                    </Select>
-                </div>
-                <div>
-                    <Button onClick={() => navigate('/retrieval')}>Come back to retrieval data</Button>
-                </div>
-                <div className="chatBox" role="log" aria-live="polite">
-                    {messages.map((message, index) => (
-                        <div key={index} className={`message ${message.type}`}>
-                            <strong>{message.type === 'file-response' ? 'File Response:' : 'ChatGPT:'}</strong> {message.content}
-                        </div>
-                    ))}
-                </div>
+                    </div>
 
-                <div className="inputBox">
-                    <Input
-                        type="text"
-                        value={userInput}
-                        onChange={(e) => setUserInput(e.target.value)}
-                        placeholder="Type your message..."
-                    />
-                    <Button type="primary" onClick={handleSendMessage} disabled={isLoading}>
-                        {isLoading ? <Spin indicator={loadingIcon} /> : "Send"}
-                    </Button>
-                </div>
+                    <div className="inputBox">
+                        <Input
+                            type="text"
+                            value={userInput}
+                            onChange={(e) => setUserInput(e.target.value)}
+                            placeholder="Type your message..."
+                        />
+                        <Button type="primary" onClick={handleSendMessage} disabled={isLoading}>
+                            {isLoading ? <Spin indicator={loadingIcon} /> : "Send"}
+                        </Button>
+                    </div>
 
-                <div className="uploadBox">
-                    <Upload
-                        name="file"
-                        action={`${BACKEND_URL}/api/upload`}
-                        showUploadList={false}
-                        onChange={handleFileUpload}
-                        aria-label="Upload a file for analysis">
-                        <Button icon={<UploadOutlined />}>Upload a file for analysis</Button>
-                    </Upload>
-                </div>
-            </Col>
-        </Row>
+                    <div className="uploadBox">
+                        <Upload
+                            name="file"
+                            action={`${BACKEND_URL}/api/upload`}
+                            showUploadList={false}
+                            onChange={handleFileUpload}
+                            aria-label="Upload a file for analysis">
+                            <Button icon={<UploadOutlined />}>Upload a file for analysis</Button>
+                        </Upload>
+                    </div>
+                </Col>
+            </Row>
+        </div>
+
+
     );
 }
 

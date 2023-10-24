@@ -97,11 +97,11 @@ function Login() {
                         >
                             <Input prefix={<LockOutlined />} type="password" placeholder="Password" />
                         </Form.Item>
-                        <Form.Item name="remember" valuePropName="checked" initialValue={true}>
+                        <Form.Item name="remember" valuePropName="checked" initialValue={false}>
                             <Checkbox>Remember me</Checkbox>  {/* Add Remember me option */}
                         </Form.Item>
                         <Form.Item>
-                            <Button type="primary" htmlType="submit">
+                            <Button className="Login" htmlType="submit">
                                 Log in
                             </Button>
                         </Form.Item>

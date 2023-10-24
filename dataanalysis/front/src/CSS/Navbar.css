@@ -1,0 +1,51 @@
+.navbar-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    background-color: #f5f5f5;
+    padding: 0 2em;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    height: 60px;
+}
+
+.navbar-container .ant-menu {
+    background-color: transparent;
+    border: none;
+    line-height: 60px;
+}
+
+.navbar-container .ant-menu-item {
+    padding: 0 15px;
+    margin: 0 5px;
+    border-bottom: none;
+    transition: background-color 0.3s ease;
+    font-size: 14px;
+}
+
+.navbar-container .ant-menu-item a {
+    color: #333;
+    padding: 5px 10px;
+    background-color: #f7f7f7;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.navbar-container .ant-menu-item a:hover {
+    background-color: #e6e6e6;
+}
+
+/* For the modal */
+
+#logout-modal-description {
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.65);
+}
+
+.ant-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.ant-modal-footer .ant-btn {
+    margin-left: 10px;
+}

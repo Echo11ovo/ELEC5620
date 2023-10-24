@@ -6,7 +6,9 @@
     align-items: center;
     padding: 20px;
 }
-
+.chatPage {
+    padding-top: 20px; 
+}
 .header {
     width: 100%;
     display: flex;
