@@ -20,13 +20,13 @@ def load_datafile(file_path):
     return dataContent
 
 # process prompts for data analysis requirements
-def dataAnalysis(user_input, input_file):
+def dataAnalysis(user_input, analysis_type, input_file):
     # user_input: input analysis requirements : string
     # input_file: uploaded file path : string
     # return user_message for apiCall()
     dataContent = load_datafile(input_file)
     user_message = f"My question is:{user_input}\nThis is the data:{dataContent}"
-    prompt_type = "You are a data analyst. Analyze the data provided and solve the question."
+    prompt_type = f"You are a data analyst. Perform analysis on the aspect of {analysis_type}. Analyze the data provided and solve the question."
 
 
     return  prompt_type, user_message

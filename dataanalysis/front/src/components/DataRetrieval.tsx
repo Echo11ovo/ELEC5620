@@ -1,73 +1,108 @@
 import React, { useState } from 'react';
+import { Input, Button, Select, Spin, Row, Col, message } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
+
+const { Option } = Select;
+const BACKEND_URL = 'http://localhost:5000';
+const loadingIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 function DataRetrieval() {
     const [naturalLanguageInput, setNaturalLanguageInput] = useState('');
-    const [selectedDataRange, setSelectedDataRange] = useState('Option1');  // default selection
+    const [selectedQuery, setSelectedQuery] = useState<string | undefined>();
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [dataFromBackend, setDataFromBackend] = useState<any>(null);
 
-    const handleNaturalLanguageSubmit = async () => {
+    const predefinedQueries = [
+        "List all customers",
+        "Show top selling products",
+        "Display orders from last month",
+        // Add more predefined queries as needed
+    ];
+
+    const handleDataRetrieval = async (type: 'natural' | 'predefined') => {
+        setIsLoading(true);
+        let messageToSend = type === 'natural' ? naturalLanguageInput : selectedQuery;
+        
+        if (!messageToSend) {
+            message.error('Please enter a query or select one from the dropdown.');
+            setIsLoading(false);
+            return;
+        }
+
         try {
-            const response = await fetch('/api/data-retrieval/natural-language', {
+            const response = await fetch(`${BACKEND_URL}/api/data-retrieval`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    query: naturalLanguageInput
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    message: messageToSend
                 })
             });
             const data = await response.json();
-            // Handle the data received from the backend
+            setDataFromBackend(data);
         } catch (error) {
-            console.error('Error fetching data using natural language:', error);
+            message.error('Error fetching data: ' + (error as Error).message);
+        } finally {
+            setIsLoading(false);
         }
     };
-    
-
-    const handleDropdownSelection = async () => {
-        try {
-            const response = await fetch(`/api/data-retrieval/selected-range?range=${selectedDataRange}`, {
-                method: 'GET'
-            });
-            const data = await response.json();
-            // Handle the data received from the backend
-        } catch (error) {
-            console.error('Error fetching data using dropdown selection:', error);
-        }
-    };
-    
 
     return (
-        <div>
-            <h2>Data Retrieval</h2>
-            
-            {/* Natural Language Input */}
-            <div>
-                <h3>Use Natural Language</h3>
-                <input 
-                    type="text" 
-                    value={naturalLanguageInput} 
-                    onChange={(e) => setNaturalLanguageInput(e.target.value)}
-                    placeholder="Describe the data you want..."
-                />
-                <button onClick={handleNaturalLanguageSubmit}>Fetch Data</button>
-            </div>
+        <Row justify="center">
+            <Col xs={24} sm={22} md={18} lg={14} xl={12}>
+                <h2>Data Retrieval</h2>
+                
+                {/* Natural Language Input */}
+                <div>
+                    <h3>Describe the data you want</h3>
+                    <Input 
+                        type="text" 
+                        value={naturalLanguageInput} 
+                        onChange={(e) => setNaturalLanguageInput(e.target.value)}
+                        placeholder="Use natural language to specify your data request..."
+                    />
+                    <Button 
+                        type="primary" 
+                        onClick={() => handleDataRetrieval('natural')} 
+                        disabled={isLoading}
+                        style={{ marginTop: '20px' }}
+                    >
+                        {isLoading ? <Spin indicator={loadingIcon} /> : "Fetch Data"}
+                    </Button>
+                </div>
 
-            {/* Dropdown Selection */}
-            <div>
-                <h3>Select Data Range</h3>
-                <select 
-                    value={selectedDataRange} 
-                    onChange={(e) => setSelectedDataRange(e.target.value)}
-                >
-                    <option value="Option1">Option 1</option>
-                    <option value="Option2">Option 2</option>
-                    <option value="Option3">Option 3</option>
-                    {/* Add more options as needed */}
-                </select>
-                <button onClick={handleDropdownSelection}>Fetch Data</button>
-            </div>
-        </div>
+                {/* Dropdown Selection */}
+                <div style={{ marginTop: '20px' }}>
+                    <h3>Or select a predefined query</h3>
+                    <Select 
+                        style={{ width: 300 }}
+                        placeholder="Select a predefined query"
+                        onChange={(value) => setSelectedQuery(value)}
+                    >
+                        {predefinedQueries.map(query => (
+                            <Option key={query} value={query}>{query}</Option>
+                        ))}
+                    </Select>
+                    <Button 
+                        type="primary" 
+                        onClick={() => handleDataRetrieval('predefined')} 
+                        disabled={isLoading}
+                        style={{ marginLeft: '10px' }}
+                    >
+                        {isLoading ? <Spin indicator={loadingIcon} /> : "Fetch Data"}
+                    </Button>
+                </div>
+
+                {/* Display data from backend */}
+                {dataFromBackend && (
+                    <div style={{ marginTop: '20px' }}>
+                        <h3>Retrieved Data:</h3>
+                        <pre>{JSON.stringify(dataFromBackend, null, 2)}</pre>
+                    </div>
+                )}
+            </Col>
+        </Row>
     );
 }
 
 export default DataRetrieval;
+

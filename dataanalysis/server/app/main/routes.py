@@ -9,6 +9,7 @@ from app.services.processPrompt import dataAnalysis, dataRetrieval
 from app.main.utils import allowed_file
 from app.main import main
 from flask import current_app as app
+from app.services.query import queryData, displayData
 
 from app.main.constants import ALLOWED_EXTENSIONS
 
@@ -72,11 +73,12 @@ def chat():
     # get user_message from frontend
     data = request.get_json()
     user_message = data.get('message', '')
-
-    input_file = '.../uploads/output.csv'
+    analysis_type = data.get('prompt','')
+    print(data)
+    input_file = './app/main\datafile.csv'
     # Data Analysis
     # process message
-    prompt_type, user_message = dataAnalysis(user_message, input_file)
+    prompt_type, user_message = dataAnalysis(user_message, analysis_type,input_file)
 
     # call api and get response_message
     response_message = apiCall(prompt_type, user_message)
@@ -93,9 +95,26 @@ def upload_file():
     if file.filename == '':
         return jsonify({"message": "No selected file"}), 400
     if file and allowed_file(file.filename):
-        filename = secure_filename(file.filename)
+        #filename = secure_filename(file.filename)
+        filename = 'datafile.csv'
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         file.save(file_path)
+        print(file_path)
+        print(filename)
         return jsonify({"message": "File successfully uploaded!"})
 
-    return jsonify({"message": "Invalid file type"}), 400
+    return jsonify({"message": "Invalid file type"}), 400 
+
+@main.route('/api/data-retrieval', methods=['POST'])
+def data_retrieval():
+    data = request.get_json()
+    user_message = data.get('message', '')
+    print(user_message)
+    prompt_type, prompt = dataRetrieval(user_message)
+    print(prompt_type, prompt)
+    sql_query = apiCall(prompt_type, prompt)
+    print(sql_query)
+    headers, data_required = queryData(sql_query)
+    formatted_data = displayData(headers, data_required)
+    print(formatted_data)
+    return jsonify(formatted_data)

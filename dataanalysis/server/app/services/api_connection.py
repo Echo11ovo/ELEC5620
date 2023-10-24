@@ -1,6 +1,8 @@
 import openai
 from flask import Flask, request, jsonify
 
+
+openai.api_key=''
 # Interact with OpenAI API
 def apiCall(prompt_type, user_message):
     # prompt_type: analysis requirements/ data retrieval requirements
