@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form, Input, Button, Row, Col, message, Spin } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { useAuth } from '../AuthContext';
+
 import '../CSS/Login.css';
 
 interface LoginFormValues {
@@ -12,6 +14,7 @@ interface LoginFormValues {
 const BACKEND_URL = 'http://localhost:5000';
 
 function Login() {
+    const { setLoggedIn } = useAuth();
     const [isLoading, setIsLoading] = useState(false); 
     const navigate = useNavigate();
 
@@ -55,6 +58,7 @@ function Login() {
             }
 
             if (data.success) {
+                setLoggedIn(true);
                 if (values.remember) {
                     localStorage.setItem('token', data.token);
                 }

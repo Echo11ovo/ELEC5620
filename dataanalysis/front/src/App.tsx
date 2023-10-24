@@ -9,49 +9,35 @@ import NotFound from './components/NotFound';
 
 
 
-const App: React.FC = () => {
-    return(
-        //没有路由保护
-        <Router>
+const AppRoutes: React.FC = () => {
+    const { isLoggedIn } = useAuth(); 
+
+    if (isLoggedIn) {
+        return (
             <Routes>
-                <Route path="/login" element={<Login/>}/>
-                <Route path="/register" element={<Register />} />
                 <Route path="/retrieval" element={<DataRetrieval />} />
-                <Route path='/chat' element={<Chat/>}/>
+                <Route path="/chat" element={<Chat />} />
+                <Route path="*" element={<NotFound />} />
             </Routes>
-        </Router>
-    )
-}
-
-// 路由保护，先别启用
-// const AppRoutes: React.FC = () => {
-//     const { isLoggedIn } = useAuth(); 
-
-//     if (isLoggedIn) {
-//         return (
-//             <Routes>
-//                 <Route path="/retrieval" element={<DataRetrieval />} />
-//                 <Route path="*" element={<NotFound />} />
-//             </Routes>
-//         );
-//     } else {
-//         return (
-//             <Routes>
-//                 <Route path="/login" element={<Login />} />
-//                 <Route path="/register" element={<Register />} />
-//                 <Route path="*" element={<Navigate to="/login" />} />
-//             </Routes>
-//         );
-//     }
-// };
-// const App: React.FC = () => {
-//     return (
-//         <AuthProvider>
-//             <Router>
-//                 <AppRoutes />
-//             </Router>
-//         </AuthProvider>
-//     );
-// };
+        );
+    } else {
+        return (
+            <Routes>
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="*" element={<Navigate to="/login" />} />
+            </Routes>
+        );
+    }
+};
+const App: React.FC = () => {
+    return (
+        <AuthProvider>
+            <Router>
+                <AppRoutes />
+            </Router>
+        </AuthProvider>
+    );
+};
 
 export default App;
