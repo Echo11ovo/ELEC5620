@@ -22,6 +22,7 @@ function Chat() {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const { Option } = Select;
     const [selectedPrompt, setSelectedPrompt] = useState<string>('');
+    
     const [userType] = useState<string | null>(localStorage.getItem('userType'));
     console.log("User Type:", userType);
     const handleFileUpload = async (info: any) => {

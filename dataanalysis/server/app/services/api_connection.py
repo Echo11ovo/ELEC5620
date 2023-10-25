@@ -1,5 +1,4 @@
 import openai
-from flask import Flask, request, jsonify
 
 
 openai.api_key = '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'

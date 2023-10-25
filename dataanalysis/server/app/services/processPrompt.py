@@ -1,4 +1,3 @@
-from flask import Flask, request, jsonify
 import csv
 # Read data from CSV and extract headers
 
