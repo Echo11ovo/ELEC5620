@@ -2,6 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
+import secrets
 
 # Initialize extensions
 db = SQLAlchemy()
@@ -10,12 +11,12 @@ jwt = JWTManager()  # Initialize JWTManager
 def create_app():
     # Create a Flask application instance
     app = Flask(__name__)
-
+    secret_key = secrets.token_hex(16)
     # Configure the application
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['UPLOAD_FOLDER'] = 'uploads/'
-    app.config['JWT_SECRET_KEY'] = 'b43318f0864d1a016531749c2f293cf3'  # Add JWT Secret Key. Make sure to change this to a secure value.
+    app.config['JWT_SECRET_KEY'] = secret_key  
 
     # Initialize extensions for this app
     db.init_app(app)
