@@ -15,8 +15,9 @@ const AppRoutes: React.FC = () => {
     if (isLoggedIn) {
         return (
             <Routes>
-                <Route path="/retrieval" element={<DataRetrieval />} />
+                <Route path="/" element={<DataRetrieval />} />
                 <Route path="/chat" element={<Chat />} />
+                <Route path="/retrieval" element={<DataRetrieval/>} />
                 <Route path="*" element={<NotFound />} />
             </Routes>
         );
