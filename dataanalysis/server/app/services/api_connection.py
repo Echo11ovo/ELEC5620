@@ -1,7 +1,7 @@
 import openai
 
 
-openai.api_key = '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'
+openai.api_key = ''
 # Interact with OpenAI API
 
 
