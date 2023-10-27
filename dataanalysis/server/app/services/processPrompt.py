@@ -56,3 +56,14 @@ def dataRetrieval(user_input):
     prompt_type = "You are a data engineer. Write a SQL query to retrieve data from the database."
 
     return prompt_type, prompt
+
+# process prompts for visualization suggestions
+def visualization(analysis_type, dataContent):
+    chart_types = ["line", "bar", "scatter", "pie", "histogram"]
+    prompt_type = (f"You are a data visualization engineer.\n "
+                   f"Visualize the data provided to assist the analysis of:{analysis_type}")
+    prompt = (f"This is the data:{dataContent}\n"
+              f"Give out headers of x-axis and y-axis, and the suggested chart type select from {chart_types}\n"
+              f"Answer format: X:x-axis header, Y:y-axis header, Type:chart type\n")
+
+    return prompt_type, prompt

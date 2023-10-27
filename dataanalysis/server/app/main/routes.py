@@ -1,7 +1,8 @@
 from flask import jsonify, request
 from werkzeug.utils import secure_filename
 import os
-import openai
+from app.services.processPrompt import read_data_and_headers_from_csv, load_datafile, visualization
+from app.services.visualization import generate_chart, process_xy_data, extract_chart_parameters
 from app.models.user import User
 from app import db
 from app.services.api_connection import apiCall
@@ -70,24 +71,27 @@ def login():
         print("Error during login:", str(e))
         return jsonify({"success": False, "message": "Internal server error!"}), 500
 
+
 @main.route('/api/chat', methods=['POST'])
 def chat():
     data = request.get_json()
     user_message = data.get('message', '')
-    analysis_type = data.get('prompt','')
-    filename = data.get('filename', 'datafile.csv')  # get filename from frontend
-    input_file = os.path.join(app.config['UPLOAD_FOLDER'], filename)  # updated file path
+    analysis_type = data.get('prompt', '')
+    # get filename from frontend
+    filename = data.get('filename', 'datafile.csv')
+    input_file = os.path.join(
+        app.config['UPLOAD_FOLDER'], filename)  # updated file path
     print(data)
     # Data Analysis
     # process message
-    prompt_type, user_message = dataAnalysis(user_message, analysis_type,input_file)
+    prompt_type, user_message = dataAnalysis(
+        user_message, analysis_type, input_file)
 
     # call api and get response_message
     response_message = apiCall(prompt_type, user_message)
 
     # return response_message to frontend
     return jsonify({"message": response_message})
-
 
 
 @main.route('/api/upload', methods=['POST'])
@@ -121,3 +125,33 @@ def data_retrieval():
     formatted_data = displayData(headers, data_required)
     print(formatted_data)
     return jsonify(formatted_data)
+
+
+@main.route('/api/generate', methods=['GET'])
+def download_csv():
+    # analysis_type = request.args.get('analysis_type')
+    # get analysis_type from frontend selection (e.g. “Market Trend Forecasting”)
+    analysis_type = ''
+    # file_path is the path of the uploaded file
+    uploads_folder_path = os.path.join(app.root_path, '..', 'uploads')
+    file_path = os.path.join(uploads_folder_path, 'datafile.csv')
+    # read data from csv file , functions are from ./services/processPrompt.py
+    headers, data = read_data_and_headers_from_csv(file_path)
+    dataContent = load_datafile(file_path)
+    # process prompt for apiCall, function from ./services/processPrompt.py
+    prompt_type, prompt = visualization(analysis_type, dataContent)
+    # call api and get response_message, including the suggested x-axis, y-axis, chart type
+    # the return format is 'X:x-axis header, Y:y-axis header, Type:chart type'
+    visualization_suggestion = apiCall(prompt_type, prompt)
+    # extract x-axis, y-axis, chart type from gpt response, function from ./services/visualization.py
+    x_header, y_header, chart = extract_chart_parameters(
+        visualization_suggestion)
+
+    # extract x-data and y-data from read data, function from ./services/visualization.py
+    x_data, y_data = process_xy_data(data, x_header, y_header)
+
+    # generate chart data, function from ./services/visualization.py
+    chart_data = generate_chart(x_header, y_header, x_data, y_data, chart)
+
+    # return chart data(base64) to frontend
+    return jsonify(chart_data)

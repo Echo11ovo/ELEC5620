@@ -12,7 +12,7 @@ interface LogoutModalProps {
 const LogoutModal: FC<LogoutModalProps> = ({ isVisible, onConfirm, onCancel }) => (
     <Modal
         title="Confirm Logout"
-        visible={isVisible}
+        open={isVisible}
         onOk={onConfirm}
         onCancel={onCancel}
         aria-labelledby="logout-modal-title"
