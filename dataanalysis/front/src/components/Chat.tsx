@@ -10,7 +10,7 @@ type Message = {
     content: string;
 };
 
-const BACKEND_URL = 'http://localhost:5000';
+const BACKEND_URL = 'http://localhost:3000';
 const loadingIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 function Chat() {
@@ -37,7 +37,7 @@ function Chat() {
     };
 
     const promptsForUser = {
-        'Customer': ['Personalized Recommendations', 'Consumption Trend Analysis', 'Shopping Advice'],
+        'Customer': ['Personal Preference', 'Daily Consumption Trend', 'Budget Advice'],
         'Merchants': ['Inventory Strategies', 'Sales Trend Analysis', 'Product Popularity Analysis'],
         'Data Analysts': ['Customer Group Analysis', 'Market Trend Forecasting', 'Store Rank Analysis', 'Sales Suggestions']
     };

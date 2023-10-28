@@ -31,8 +31,15 @@ def dataAnalysis(user_input, analysis_type, input_file):
     # input_file: uploaded file path : string
     # return user_message for apiCall()
     analysis_type_to_prompt = {
-        'sales-trend-analysis': "You are a data analyst. Analyze the data and give me the sales trend.",
-        'product-popularity-analysis': "You are a data analyst. Analyze the data and give me the popular product .",
+        # Customer
+        'personal-preference': "You are a data analyst. Briefly describe my personal preference regarding the product category based on the following data.",
+        'daily-consumption-trend': "You are a data analyst. Give me short description of my consumption trend (focusing on the ordertime and amount, such as when(time of the day,categorized as morning,afternoon and night) the customer would like to shopping and spend more) based on the provided data.",
+        'budget-advice': "You are a data analyst. Give me brief shopping advice on how to allocate my shopping budget(with suggested portion,like 10%) based on the following data.",
+        # Merchant
+        'inventory-strategies': "You are a data analyst. Give me short inventory strategies about what product should be supplemented and what should stop importting.",
+        'sales-trend-analysis': "You are a data analyst. Briefly describe the sales trend during this time, including the up and downs, the heightest and lowest time.",
+        'product-popularity-analysis': "You are a data analyst. Give out the top-5 porpular product and its sales quantity.",
+        # Data Analyst
         'customer-group-analysis': "You are a data analyst. give me the analysis result of the gender and age distribution of customers in these order data.",
         'store-rank-analysis': "You are a data analyst. Rank the top-3 sales merchants during this time,just give me the sequence with their sales amount.",
         'market-trend-forecasting': "You are a professional data analyst, proficient in Market Trend Forecasting. Please predict if the sales amount would increase or decrease of the last quarter of 2023. Answer with this format: the sales amount would (increase or decrease), the predicted sales amount is around …,  increase / decrease from the previous quarter about …%.",
@@ -47,7 +54,6 @@ def dataAnalysis(user_input, analysis_type, input_file):
     return prompt_type, user_message
 
 # process prompts for data retrieval requirements
-
 
 def dataRetrieval(user_input):
     # user_input: input data retrieval requirements : string
@@ -71,10 +77,10 @@ def dataRetrieval(user_input):
 # process prompts for visualization suggestions
 def visualization(analysis_type, dataContent):
     chart_types = ["line", "bar", "pie"]
-    prompt_type = (f"You are a data visualization engineer.\n "
-                   f"Visualize the data provided to assist the analysis of:{analysis_type}")
+    prompt_type = (f"You are a data visualization engineer.\n"
+                   f"Give out approripate suggestions for visualization that focusing on the analysis aspects of {analysis_type}. ")
     prompt = (f"This is the data:{dataContent}\n"
-              f"Select x-axis and y-axis from the dataform, and the suggested chart type select from {chart_types}\n"
+              f"select appropriate x-axis and y-axis from the dataform, and the suggested chart type select from {chart_types}\n"
               f"Answer format: X:x-axis header, Y:y-axis header, Type:chart type\n")
 
     return prompt_type, prompt

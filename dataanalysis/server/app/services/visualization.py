@@ -80,8 +80,8 @@ def bar_chart(x_data, y_data):
 
     bars = plt.bar(x_data, y_data, color=colors)
     # Label the bars with their respective values
-    for bar, value in zip(bars, y_data):
-        plt.text(bar.get_x() + bar.get_width() / 2 - 0.4, bar.get_height() + 30, str(value), fontsize=10)
+    # for bar, value in zip(bars, y_data):
+    #     plt.text(bar.get_x() + bar.get_width() / 2 - 0.4, bar.get_height() + 30, str(value), fontsize=10)
 
 def pie_chart(x_data, y_data):
     cmap = get_cmap('Blues')
@@ -119,5 +119,5 @@ def generate_chart(x_header, y_header, x_data, y_data, chart_type):
     plt.savefig(buffer, format='png')
     buffer.seek(0)
     chart_data = base64.b64encode(buffer.read()).decode()
-    print(chart_data)
+    # print(chart_data)
     return chart_data
