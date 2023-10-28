@@ -37,7 +37,9 @@ def process_xy_data(data, x_header, y_header):
 
     if x_header == 'ordertime':
         # Convert ordertimes to date objects
-        date_objects = [datetime.strptime(ordertime, "%Y/%m/%d %H:%M").date() for ordertime in x_data]
+        #date_objects = [datetime.strptime(ordertime, "%Y/%m/%d %H:%M").date() for ordertime in x_data]
+        date_objects = [datetime.strptime(ordertime, "%Y-%m-%d %H:%M:%S").date() for ordertime in x_data]
+
         # Create a list of (date, y_value) pairs
         data_pairs = list(zip(date_objects, y_data))
 
@@ -81,6 +83,14 @@ def bar_chart(x_data, y_data):
     for bar, value in zip(bars, y_data):
         plt.text(bar.get_x() + bar.get_width() / 2 - 0.4, bar.get_height() + 30, str(value), fontsize=10)
 
+def pie_chart(x_data, y_data):
+    cmap = get_cmap('Blues')
+    # Generate a random color for each bar based on the colormap
+    colors = [cmap(random()) for _ in range(len(x_data))]
+    labels = x_data
+    sizes = y_data
+    plt.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%', startangle=140)
+
 
 def generate_chart(x_header, y_header, x_data, y_data, chart_type):
     # Create a new figure
@@ -92,12 +102,13 @@ def generate_chart(x_header, y_header, x_data, y_data, chart_type):
     elif chart_type == 'bar':
         bar_chart(x_data, y_data)
 
-    # Add other chart types as needed (e.g., scatter, pie, etc.)
+    elif chart_type =='pie':
+        pie_chart(x_data, y_data)
 
-    # Customize chart labels and title
-    plt.xlabel(x_header)
-    plt.ylabel(y_header)
-    plt.title(f'{chart_type.capitalize()} Chart')
+    if chart_type != 'pie':
+        # Customize chart labels and title
+        plt.xlabel(x_header)
+        plt.ylabel(y_header)
 
     # Display or save the chart
     plt.tight_layout()  # Adjusts spacing

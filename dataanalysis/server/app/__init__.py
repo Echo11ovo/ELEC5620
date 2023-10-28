@@ -12,11 +12,12 @@ def create_app():
     # Create a Flask application instance
     app = Flask(__name__)
     secret_key = secrets.token_hex(16)
+    app.secret_key = secrets.token_hex(16)
     # Configure the application
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['UPLOAD_FOLDER'] = 'uploads/'
-    app.config['JWT_SECRET_KEY'] = secret_key  
+    app.config['JWT_SECRET_KEY'] = secret_key
 
     # Initialize extensions for this app
     db.init_app(app)

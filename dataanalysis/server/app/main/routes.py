@@ -1,4 +1,4 @@
-from flask import jsonify, request
+from flask import jsonify, request, session
 from werkzeug.utils import secure_filename
 import os
 from app.services.processPrompt import read_data_and_headers_from_csv, load_datafile, visualization
@@ -77,6 +77,8 @@ def chat():
     data = request.get_json()
     user_message = data.get('message', '')
     analysis_type = data.get('prompt', '')
+    # save analysis_type to session
+    session['analysis_type'] = analysis_type
     # get filename from frontend
     filename = data.get('filename', 'datafile.csv')
     input_file = os.path.join(
@@ -128,10 +130,10 @@ def data_retrieval():
 
 
 @main.route('/api/generate', methods=['GET'])
-def download_csv():
+def chart():
     # analysis_type = request.args.get('analysis_type')
     # get analysis_type from frontend selection (e.g. “Market Trend Forecasting”)
-    analysis_type = ''
+    analysis_type = session.get('analysis_type', '')
     # file_path is the path of the uploaded file
     uploads_folder_path = os.path.join(app.root_path, '..', 'uploads')
     file_path = os.path.join(uploads_folder_path, 'datafile.csv')
