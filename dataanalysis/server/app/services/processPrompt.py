@@ -32,7 +32,7 @@ def dataAnalysis(user_input, analysis_type, input_file):
     # return user_message for apiCall()
     dataContent = load_datafile(input_file)
     user_message = f"My question is:{user_input}\nThis is the data:{dataContent}"
-    prompt_type = f"You are a data analyst. Perform analysis on the aspect of {analysis_type}. Analyze the data provided and solve the question."
+    prompt_type = f"You are a professional data analyst, proficient in {analysis_type}. "
 
     return prompt_type, user_message
 

@@ -1,21 +1,54 @@
-orderid,customerid,customerName,merchantid,merchantName,productid,productName,ordertime,quantity,amount
-1,21,Mark Cooper,11,Electro Gallery,P30,Complete Weight Lifting Set,2023/3/9 11:36,2,88.64
-2,32,Rodney Karpinski,14,Game Warehouse,P7,Mountain Bike - 29-inch,2023/12/15 22:33,9,2500.2
-3,50,Karen Shoulders,14,Game Warehouse,P30,Complete Weight Lifting Set,2023/3/9 11:28,6,265.92
-4,37,Albert Burnside,44,Tech Hub,P4,Men's Slim Fit Dress Shirt,2023/1/10 03:27,3,213.87
-5,40,Kim Richard,26,Quick Store,P18,Graphic Novel Collection,2023/4/12 22:06,3,106.02
-6,16,Charles Lemay,24,Mega Shop,P18,Graphic Novel Collection,2023/7/26 22:44,10,353.4
-7,3,Michael Stoneback,28,Quick Market,P48,Fantasy Adventure Graphic Novel,2023/6/17 05:48,3,70.77
-8,28,Edward Oritz,41,Tech Store,P32,4K Ultra HD Smart LED TV,2023/5/12 22:17,8,4078.48
-9,10,Kim Smith,21,Awesome Store,P3,Sony Noise-Canceling Headphones,2023/3/5 20:11,5,4580.95
-10,63,Gay Ross,30,Electro Market,P9,Adjustable Dumbbell Set,2023/2/25 06:10,9,156.78
-11,22,Lucy Reagan,44,Tech Hub,P23,LG OLED 4K Smart TV,2023/1/6 23:28,9,11074.14
-12,78,Ronald Hooper,36,Awesome Emporium,P22,Apple MacBook Pro 16-inch,2023/1/2 12:54,2,2041.34
-13,99,Charles Haig,26,Quick Store,P49,Artisanal Gourmet Chocolates,2023/11/12 23:38,8,1151.36
-14,83,Renee Girard,10,Game Outlet,P7,Mountain Bike - 29-inch,2023/12/6 17:40,10,2778
-15,51,Ian Barlow,23,Game Market,P18,Graphic Novel Collection,2023/10/9 10:00,2,70.68
-16,13,Jessie Fletcher,46,Tech Emporium,P4,Men's Slim Fit Dress Shirt,2023/11/4 23:22,8,570.32
-17,96,David Obrien,16,Awesome Market,P47,Bestselling Mystery Novel,2023/8/10 04:09,8,396.08
-18,98,Vera Gant,35,Awesome Boutique,P25,Women's Classic Leather Jacket,2023/3/30 08:09,3,93.27
-19,74,James Matten,44,Tech Hub,P47,Bestselling Mystery Novel,2023/4/25 23:36,7,346.57
-20,84,Patricia Jean,19,Tech Market,P49,Artisanal Gourmet Chocolates,2023/8/20 16:16,2,287.84
+amount,customerName,customerid,merchantName,merchantid,orderid,ordertime,productName,productid,quantity
+88.64,"Mark Cooper",21,"Electro Gallery",11,1,"2023-03-09 11:36:36","Complete Weight Lifting Set","P30",2
+265.92,"Karen Shoulders",50,"Game Warehouse",14,3,"2023-03-09 11:28:30","Complete Weight Lifting Set","P30",6
+213.87,"Albert Burnside",37,"Tech Hub",44,4,"2023-01-10 03:27:02","Men's Slim Fit Dress Shirt","P4",3
+106.02,"Kim Richard",40,"Quick Store",26,5,"2023-04-12 22:06:15","Graphic Novel Collection","P18",3
+70.77,"Michael Stoneback",3,"Quick Market",28,7,"2023-06-17 05:48:08","Fantasy Adventure Graphic Novel","P48",3
+4078.48,"Edward Oritz",28,"Tech Store",41,8,"2023-05-12 22:17:50","4K Ultra HD Smart LED TV","P32",8
+4580.95,"Kim Smith",10,"Awesome Store",21,9,"2023-03-05 20:11:26","Sony Noise-Canceling Headphones","P3",5
+156.78,"Gay Ross",63,"Electro Market",30,10,"2023-02-25 06:10:40","Adjustable Dumbbell Set","P9",9
+11074.14,"Lucy Reagan",22,"Tech Hub",44,11,"2023-01-06 23:28:15","LG OLED 4K Smart TV","P23",9
+2041.34,"Ronald Hooper",78,"Awesome Emporium",36,12,"2023-01-02 12:54:58","Apple MacBook Pro 16-inch","P22",2
+93.27,"Vera Gant",98,"Awesome Boutique",35,18,"2023-03-30 08:09:49","Women's Classic Leather Jacket","P25",3
+346.57,"James Matten",74,"Tech Hub",44,19,"2023-04-25 23:36:00","Bestselling Mystery Novel","P47",7
+640.05,"Gladys Miller",30,"Super Emporium",34,21,"2023-06-07 13:37:20","Non-Stick Cookware Set","P14",3
+7956.36,"Matthew Ford",58,"Super Boutique",9,22,"2023-04-06 04:32:40","Samsung 4K QLED TV","P2",6
+48.62,"Susan Ha",93,"Global Emporium",48,24,"2023-03-09 06:52:05","Professional Hair Styling Kit","P40",2
+139.8,"Rosa Johnson",82,"Game Hub",29,25,"2023-01-09 02:40:42","Luxurious Bath Bombs Set","P38",3
+46.6,"Stephanie Klein",41,"Game Warehouse",14,27,"2023-02-08 01:58:35","Luxurious Bath Bombs Set","P38",1
+2864.4,"Demarcus Alvarado",88,"Tech Boutique",6,29,"2023-05-28 03:49:27","Non-Stick Grill Pan","P44",6
+1019.62,"Jaime Castillo",19,"Electro Market",30,32,"2023-02-01 16:15:40","4K Ultra HD Smart LED TV","P32",2
+784.18,"Michael Stoneback",3,"Electro Market",30,34,"2023-04-10 16:32:31","Wireless In-Ear Earbuds","P33",2
+4921.84,"Lori Spradlin",24,"Game Hub",29,36,"2023-02-18 16:38:44","LG OLED 4K Smart TV","P23",4
+643.16,"Brenda Argenbright",100,"Awesome Boutique",35,37,"2023-06-26 23:42:47","L-Shaped Sectional Sofa","P6",2
+784.18,"Brenda Argenbright",100,"Global Emporium",48,39,"2023-03-20 09:21:51","Wireless In-Ear Earbuds","P33",2
+1286.32,"Sarah Ploof",91,"Game Market",23,43,"2023-05-28 05:56:22","L-Shaped Sectional Sofa","P6",4
+248.72,"Victor Katt",45,"Electro Market",30,45,"2023-03-26 10:31:08","Women's Classic Leather Jacket","P25",8
+916.19,"Edith Grady",23,"Digital Shop",22,47,"2023-05-06 19:35:04","Sony Noise-Canceling Headphones","P3",1
+235.9,"Gay Ross",63,"Digital Warehouse",8,48,"2023-05-03 06:56:00","Professional Makeup Brush Kit","P31",5
+419.4,"Ronald Hooper",78,"Electro Outlet",40,50,"2023-03-01 18:06:10","Luxurious Bath Bombs Set","P38",9
+1690.72,"Matthew Ford",58,"Awesome Store",21,53,"2023-03-30 00:01:21","Outdoor Camping Gear Set","P42",8
+1343.61,"Marcella Chapman",85,"Electro Market",30,54,"2023-06-25 03:03:39","Women's Casual Denim Jeans","P35",9
+4509.06,"Kim Richard",40,"Giga Market",7,56,"2023-05-11 12:55:46","Premium Wireless Over-Ear Headphones","P46",6
+2045.16,"Star Blake",29,"Global Hub",2,57,"2023-01-24 16:34:06","Beats Studio3 Wireless Headphones","P24",2
+72.45,"Scott Tedesco",55,"Giga Gallery",3,58,"2023-03-18 22:24:10","Luxury Aromatherapy Essential Oils Set","P29",7
+91.85,"Christina Vargas",79,"Tech Boutique",6,60,"2023-04-07 00:04:02","Bestselling Novel - Thriller","P17",5
+427.74,"Victor Katt",45,"Game Store",31,62,"2023-03-21 21:15:17","Men's Slim Fit Dress Shirt","P4",6
+751.51,"Linda Clark",61,"Game Emporium",38,63,"2023-05-03 18:15:21","Premium Wireless Over-Ear Headphones","P46",1
+641.61,"Lori Spradlin",24,"Electro Market",30,68,"2023-02-07 23:03:47","Men's Slim Fit Dress Shirt","P4",9
+724.3,"Denise Brown",18,"Super Store",27,70,"2023-03-28 05:01:59","Stylish Men's Fedora Hat","P20",5
+2790.5,"Linda Clark",61,"Tech Gallery",5,71,"2023-03-05 16:45:53","High-Performance Mountain Bike","P28",10
+895.74,"John Brown",17,"Electro Market",30,72,"2023-01-12 15:08:49","Women's Casual Denim Jeans","P35",6
+64.19,"Jaime Castillo",19,"Quick Shop",47,73,"2023-06-25 17:50:53","Men's Running Shoes","P11",1
+121.94,"George Brown",48,"Digital Shop",22,75,"2023-05-18 16:49:47","Adjustable Dumbbell Set","P9",7
+869.16,"Gerardo Reese",77,"Game Market",23,80,"2023-01-26 14:47:37","Stylish Men's Fedora Hat","P20",6
+1832.38,"Matilda Rutter",59,"Electro Gallery",11,82,"2023-06-20 01:38:37","Sony Noise-Canceling Headphones","P3",2
+4078.48,"Marcella Chapman",85,"Tech Hub",44,88,"2023-06-09 01:35:37","4K Ultra HD Smart LED TV","P32",8
+169.12,"Kim Richard",40,"Super Gallery",49,90,"2023-03-10 14:34:18","Men's Premium Leather Shoes","P26",7
+176.7,"Louis Lutz",49,"Game Warehouse",14,91,"2023-02-19 10:06:01","Graphic Novel Collection","P18",5
+55.11,"Arturo Blalock",92,"Giga Store",18,93,"2023-04-13 16:54:37","Bestselling Novel - Thriller","P17",3
+224.44,"James Matten",74,"Giga Market",7,94,"2023-03-26 03:55:39","Athletic Running Shoes","P41",2
+52.26,"Rose Rodriguez",25,"Electro Store",42,96,"2023-02-16 15:03:10","Adjustable Dumbbell Set","P9",3
+6121.45,"Edwin Sorensen",81,"Awesome Store",21,97,"2023-06-09 03:47:32","Wireless Bluetooth Headphones","P16",5
+93.87,"Ruben Magrath",34,"Awesome Emporium",36,98,"2023-01-21 23:15:43","NBA Official Basketball","P12",1
+970.2,"Howard Varel",8,"Giga Market",7,99,"2023-02-20 15:19:19","Gardening Tools Kit","P15",3

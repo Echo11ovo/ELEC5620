@@ -1,7 +1,7 @@
 import openai
 
 
-openai.api_key = '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'
+openai.api_key = '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'
 # Interact with OpenAI API
 
 
@@ -14,7 +14,7 @@ def apiCall(prompt_type, user_message):
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=prompt_messages,
-            max_tokens=200,
+            max_tokens=1000,
             temperature=0.9
         )
         response_message = response.choices[0].message['content'].strip()
