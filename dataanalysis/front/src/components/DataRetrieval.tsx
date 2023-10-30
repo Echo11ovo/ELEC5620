@@ -6,7 +6,7 @@ import Navbar from './Logout';
 import '../CSS/Retrieval.css';
 import { saveAs } from 'file-saver';
 
-const BACKEND_URL = 'http://localhost:5000';
+const BACKEND_URL = 'http://localhost:3000';
 const loadingIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 function DataRetrieval() {

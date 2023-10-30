@@ -5,7 +5,7 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import '../CSS/Register.css';
 
 const { Option } = Select;
-const BACKEND_URL = 'http://localhost:5000';
+const BACKEND_URL = 'http://localhost:3000';
 
 function Register() {
     const navigate = useNavigate();

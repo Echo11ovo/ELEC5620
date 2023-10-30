@@ -77,8 +77,9 @@ def chat():
     data = request.get_json()
     user_message = data.get('message', '')
     analysis_type = data.get('prompt', '')
-    # save analysis_type to session
+    # save analysis_type and input to session
     session['analysis_type'] = analysis_type
+    session['user_input'] = user_message
     # get filename from frontend
     filename = data.get('filename', 'datafile.csv')
     input_file = os.path.join(
@@ -125,7 +126,7 @@ def data_retrieval():
     print(sql_query)
     headers, data_required = queryData(sql_query)
     formatted_data = displayData(headers, data_required)
-    print(formatted_data)
+    # print(formatted_data)
     return jsonify(formatted_data)
 
 
@@ -134,25 +135,29 @@ def chart():
     # analysis_type = request.args.get('analysis_type')
     # get analysis_type from frontend selection (e.g. “Market Trend Forecasting”)
     analysis_type = session.get('analysis_type', '')
+    user_input = session.get('user_input', '')
     # file_path is the path of the uploaded file
     uploads_folder_path = os.path.join(app.root_path, '..', 'uploads')
     file_path = os.path.join(uploads_folder_path, 'datafile.csv')
-    # read data from csv file , functions are from ./services/processPrompt.py
+
+    # read data from csv file
     headers, data = read_data_and_headers_from_csv(file_path)
     dataContent = load_datafile(file_path)
-    # process prompt for apiCall, function from ./services/processPrompt.py
-    prompt_type, prompt = visualization(analysis_type, dataContent)
+
+    # process prompt for apiCall
+    prompt_type, prompt = visualization(analysis_type, user_input, dataContent)
+
     # call api and get response_message, including the suggested x-axis, y-axis, chart type
     # the return format is 'X:x-axis header, Y:y-axis header, Type:chart type'
     visualization_suggestion = apiCall(prompt_type, prompt)
-    # extract x-axis, y-axis, chart type from gpt response, function from ./services/visualization.py
+    # extract x-axis, y-axis, chart type from gpt response
     x_header, y_header, chart = extract_chart_parameters(
         visualization_suggestion)
 
-    # extract x-data and y-data from read data, function from ./services/visualization.py
+    # extract x-data and y-data from read data
     x_data, y_data = process_xy_data(data, x_header, y_header)
 
-    # generate chart data, function from ./services/visualization.py
+    # generate chart data
     chart_data = generate_chart(x_header, y_header, x_data, y_data, chart)
 
     # return chart data(base64) to frontend

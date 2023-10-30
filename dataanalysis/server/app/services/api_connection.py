@@ -1,9 +1,8 @@
 import openai
 
 
-openai.api_key = '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'
+openai.api_key = ''
 # Interact with OpenAI API
-
 
 def apiCall(prompt_type, user_message):
     # prompt_type: analysis requirements/ data retrieval requirements
@@ -15,7 +14,7 @@ def apiCall(prompt_type, user_message):
             model="gpt-3.5-turbo",
             messages=prompt_messages,
             max_tokens=1000,
-            temperature=0.9
+            temperature=0.5
         )
         response_message = response.choices[0].message['content'].strip()
         # return response from the ChatGPT API

@@ -38,7 +38,7 @@ const Navbar = () => {
         setIsModalVisible(false);
         localStorage.removeItem('token');
         localStorage.removeItem('userType');
-        navigate('/login');
+        navigate('login');
         window.location.reload();
     };
 
